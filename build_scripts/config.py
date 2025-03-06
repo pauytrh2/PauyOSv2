@@ -3,4 +3,4 @@
 imageType = 'disk'
 imageFS = 'fat32'
 imageSize = '250m'
-toolchain='/home/pauytrh/PauyOS/.toolchains'
+toolchain='/home/pauytrh/PauyOSv2/.toolchains'

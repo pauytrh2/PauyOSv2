@@ -5,10 +5,19 @@
 #include <arch/i686/irq.h>
 #include <debug.h>
 #include <boot/bootparams.h>
+#include <arch/i686/vga_text.h>
 
 extern void _init();
 
 void crash_me();
+
+void VGA_word(const char* string, uint8_t color)
+{
+    for (int i = 0; string[i] != '\0'; i++) {
+        VGA_putcolor(i, 0, color);
+        VGA_putc(string[i]);
+    }
+}
 
 void timer(Registers* regs)
 {
@@ -19,6 +28,7 @@ void start(BootParams* bootParams)
 {   
     // call global constructors
     _init();
+    VGA_clrscr();
 
     HAL_Initialize();
 
@@ -37,8 +47,10 @@ void start(BootParams* bootParams)
     log_warn("Main", "This is a warning msg!");
     log_err("Main", "This is an error msg!");
     log_crit("Main", "This is a critical msg!");
-    printf("Pauy OS v2.0.0\n");
-    printf("This operating system is under construction.\n");
+
+    VGA_setcursor(0, 0);
+
+    VGA_word("Welcome to PauyOS!\n", 0x05); // magenta
     //i686_IRQ_RegisterHandler(0, timer);
 
     //crash_me();

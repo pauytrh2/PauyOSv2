@@ -55,8 +55,8 @@ OUTPUT(build/i686_debug/stage1_fat32/stage1.bin binary)
  .debug_pubnames
                 0x0000000000000000        0x0 build/i686_debug/stage1_fat32/boot.o
 
-.debug_info     0x0000000000000000       0x7c
- .debug_info    0x0000000000000000       0x7c build/i686_debug/stage1_fat32/boot.o
+.debug_info     0x0000000000000000       0x7e
+ .debug_info    0x0000000000000000       0x7e build/i686_debug/stage1_fat32/boot.o
 
 .debug_abbrev   0x0000000000000000       0x1d
  .debug_abbrev  0x0000000000000000       0x1d build/i686_debug/stage1_fat32/boot.o
