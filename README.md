@@ -14,7 +14,7 @@ sudo dnf install gcc gcc-c++ make bison flex gmp-devel libmpc-devel mpfr-devel t
                    nasm mtools python3 python3-pip python3-pyparted python3-scons dosfstools guestfs-tools qemu-system-x86
 
 # Arch & Arch-based:
-yay -S gcc make bison flex libgmp-static libmpc mpfr texinfo nasm mtools qemu-system-x86 python3 scons
+yay -S gcc make bison flex libgmp-static libmpc mpfr texinfo nasm mtools qemu-system-x86 python3 scons dosfstools libguestfs
 ```
 NOTE: to install all the required packages on Arch, you need an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers).
 
