@@ -92,6 +92,14 @@ void VGA_putc(char c)
             g_ScreenX = 0;
             break;
 
+        case '\b': // backspace
+            if (g_ScreenX > 0) {
+                g_ScreenX--;
+                VGA_putchr(g_ScreenX, g_ScreenY, ' ');
+                VGA_setcursor(g_ScreenX, g_ScreenY);
+            }
+            break;
+
         default:
             VGA_putchr(g_ScreenX, g_ScreenY, c);
             g_ScreenX++;

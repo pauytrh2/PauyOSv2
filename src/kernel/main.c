@@ -8,7 +8,35 @@
 #include <boot/bootparams.h>
 #include <arch/i686/vga_text.h>
 
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
+
 extern void _init();
+
+static int cursor_x = 0;
+static int cursor_y = 1; // 2nd line
+
+void VGA_move_cursor(int x_offset, int y_offset)
+{
+    // Update cursor position with the given offsets
+    cursor_x += x_offset;
+    cursor_y += y_offset;
+
+    // Ensure cursor stays within screen boundaries
+    if (cursor_x < 0) cursor_x = 0;
+    if (cursor_y < 0) cursor_y = 0;
+    if (cursor_x >= VGA_WIDTH) cursor_x = VGA_WIDTH - 1;
+    if (cursor_y >= VGA_HEIGHT) cursor_y = VGA_HEIGHT - 1;
+
+    // Calculate the cursor position in VGA memory
+    unsigned short position = (cursor_y * VGA_WIDTH) + cursor_x;
+
+    // Set the cursor position
+    outb(0x3D4, 0x0F); // Set index to low byte of cursor position
+    outb(0x3D5, position & 0xFF);
+    outb(0x3D4, 0x0E); // Set index to high byte of cursor position
+    outb(0x3D5, (position >> 8) & 0xFF);
+}
 
 void VGA_word(const char* string, uint8_t color)
 {
@@ -54,9 +82,14 @@ void keyboard_handler(Registers* regs)
     if (scancode & 0x80) {
         // key release 
     } else {
-        char key = scancode_to_ascii[scancode];
-        if (key) {
-            printf("%c", key);
+        if (scancode == 0x0E) { // backspace
+            VGA_putc('\b');
+        } else {
+            char key = scancode_to_ascii[scancode];
+            if (key) {
+                printf("%c", key);
+                cursor_x += 1;
+            }
         }
     }
 }
