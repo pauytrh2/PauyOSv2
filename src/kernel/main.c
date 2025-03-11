@@ -89,6 +89,4 @@ void start(BootParams* bootParams)
 
     i686_IRQ_RegisterHandler(1, keyboard_handler);
     outb(0x21, inb(0x21) & ~0x02);
-
-    for (;;);
 }
