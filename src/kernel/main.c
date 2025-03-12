@@ -16,25 +16,24 @@ extern void _init();
 static int cursor_x = 0;
 static int cursor_y = 1; // 2nd line
 
+static int shift_pressed = 0;
+
 void VGA_move_cursor(int x_offset, int y_offset)
 {
-    // Update cursor position with the given offsets
     cursor_x += x_offset;
     cursor_y += y_offset;
 
-    // Ensure cursor stays within screen boundaries
     if (cursor_x < 0) cursor_x = 0;
     if (cursor_y < 0) cursor_y = 0;
     if (cursor_x >= VGA_WIDTH) cursor_x = VGA_WIDTH - 1;
     if (cursor_y >= VGA_HEIGHT) cursor_y = VGA_HEIGHT - 1;
 
-    // Calculate the cursor position in VGA memory
+    // cursor position in VGA memory
     unsigned short position = (cursor_y * VGA_WIDTH) + cursor_x;
 
-    // Set the cursor position
-    outb(0x3D4, 0x0F); // Set index to low byte of cursor position
+    outb(0x3D4, 0x0F);
     outb(0x3D5, position & 0xFF);
-    outb(0x3D4, 0x0E); // Set index to high byte of cursor position
+    outb(0x3D4, 0x0E);
     outb(0x3D5, (position >> 8) & 0xFF);
 }
 
@@ -73,6 +72,14 @@ static char scancode_to_ascii[128] = {
     '*', 0, ' ', 0,
 };
 
+static char scancode_to_ascii_shifted[128] = {
+    0,  27, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '\b',
+    '\t', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n',
+    0, 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~',
+    0, '|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 0,
+    '*', 0, ' ', 0,
+};
+
 void keyboard_handler(Registers* regs)
 {
     uint8_t scancode = inb(0x60); // scancode from keyboard port
@@ -80,12 +87,26 @@ void keyboard_handler(Registers* regs)
     log_debug("Keyboard", "Scancode received: %x", scancode);
 
     if (scancode & 0x80) {
-        // key release 
+        // key release
+        scancode &= 0x7F; // remove released flag
+        if (scancode == 0x2A || scancode == 0x36) { // Lshift or Rshift release
+            shift_pressed = 0;
+        }
     } else {
-        if (scancode == 0x0E) { // backspace
+        // key press
+        if (scancode == 0x2A || scancode == 0x36) { // Lshift or Rshift release
+            shift_pressed = 1;
+        } else if (scancode == 0x0E) { // backspace
             VGA_putc('\b');
         } else {
-            char key = scancode_to_ascii[scancode];
+            char key = 0;
+            
+            if (shift_pressed) {
+                key = scancode_to_ascii_shifted[scancode];
+            } else {
+                key = scancode_to_ascii[scancode];
+            }
+
             if (key) {
                 printf("%c", key);
                 cursor_x += 1;
