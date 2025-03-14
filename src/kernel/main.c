@@ -7,9 +7,11 @@
 #include <debug.h>
 #include <boot/bootparams.h>
 #include <arch/i686/vga_text.h>
+#include </home/pauytrh/PauyOSv2/image/root/system_resources/PDE/frame.h>
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
+#define MAX_INPUT_LENGTH 1024  // Maximum length of typed input
 
 extern void _init();
 
@@ -17,6 +19,11 @@ static int cursor_x = 0;
 static int cursor_y = 1; // 2nd line
 
 static int shift_pressed = 0;
+
+static char input_buffer[MAX_INPUT_LENGTH];
+static int input_index = 0;
+
+static int reroute_keyboard_input = 0;
 
 void VGA_move_cursor(int x_offset, int y_offset) {
     cursor_x += x_offset;
@@ -76,6 +83,14 @@ static char scancode_to_ascii_shifted[128] = {
     '*', 0, ' ', 0,
 };
 
+int strcmp(const char *str1, const char *str2) {
+    while (*str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
+    }
+    return (unsigned char)*str1 - (unsigned char)*str2;
+}
+
 void keyboard_handler(Registers* regs) {
     uint8_t scancode = inb(0x60); // scancode from keyboard port
 
@@ -89,10 +104,13 @@ void keyboard_handler(Registers* regs) {
         }
     } else {
         // key press
-        if (scancode == 0x2A || scancode == 0x36) { // Lshift or Rshift release
+        if (scancode == 0x2A || scancode == 0x36) { // Lshift or Rshift press
             shift_pressed = 1;
         } else if (scancode == 0x0E) { // backspace
-            VGA_putc('\b');
+            if (reroute_keyboard_input && input_index > 0) {
+                input_index--; 
+                input_buffer[input_index] = '\0'; // null terminate the string
+            }
         } else {
             char key = 0;
             
@@ -103,15 +121,31 @@ void keyboard_handler(Registers* regs) {
             }
 
             if (key) {
-                printf("%c", key);
-                cursor_x += 1;
+                if (reroute_keyboard_input && input_index < MAX_INPUT_LENGTH - 1) {
+                    input_buffer[input_index++] = key;
+                    input_buffer[input_index] = '\0'; // null terminate the string
+                } else if (!reroute_keyboard_input) {
+                    // If rerouting is not enabled print the character to the screen
+                    printf("%c", key);
+                    cursor_x += 1;
+                }
             }
         }
     }
 }
 
-void PDE() { // Pauytrh desktop environment
-    
+void PDE() {
+    VGA_clrscr();
+    VGA_word(pde_text, 0x0F); // white
+    reroute_keyboard_input = 1;
+
+    while (1) {
+        if (strcmp(input_buffer, "t") == 0) {
+            printf("One day... this will open a chrome tab!");
+            log_info("Main/PDE", "'t' key pressed!");
+            input_buffer[0] = '\0';  // null terminate the buffer
+        }
+    }
 }
 
 void start(BootParams* bootParams) {   
@@ -141,5 +175,5 @@ void start(BootParams* bootParams) {
     i686_IRQ_RegisterHandler(1, keyboard_handler);
     outb(0x21, inb(0x21) & ~0x02);
 
-    
+    PDE();
 }
