@@ -18,8 +18,7 @@ static int cursor_y = 1; // 2nd line
 
 static int shift_pressed = 0;
 
-void VGA_move_cursor(int x_offset, int y_offset)
-{
+void VGA_move_cursor(int x_offset, int y_offset) {
     cursor_x += x_offset;
     cursor_y += y_offset;
 
@@ -37,21 +36,18 @@ void VGA_move_cursor(int x_offset, int y_offset)
     outb(0x3D5, (position >> 8) & 0xFF);
 }
 
-void VGA_word(const char* string, uint8_t color)
-{
+void VGA_word(const char* string, uint8_t color) {
     for (int i = 0; string[i] != '\0'; i++) {
         VGA_putcolor(i, 0, color);
         VGA_putc(string[i]);
     }
 }
 
-void timer(Registers* regs)
-{
+void timer(Registers* regs) {
     printf(".");
 }
 
-void PIC_remap()
-{
+void PIC_remap() {
     outb(0x20, 0x11);
     outb(0xA0, 0x11);
     outb(0x21, 0x20); // IRQ0-7 to 0x20-0x27
@@ -80,8 +76,7 @@ static char scancode_to_ascii_shifted[128] = {
     '*', 0, ' ', 0,
 };
 
-void keyboard_handler(Registers* regs)
-{
+void keyboard_handler(Registers* regs) {
     uint8_t scancode = inb(0x60); // scancode from keyboard port
 
     log_debug("Keyboard", "Scancode received: %x", scancode);
@@ -115,8 +110,13 @@ void keyboard_handler(Registers* regs)
     }
 }
 
-void start(BootParams* bootParams)
-{   
+void pauyshell() {
+    while () {
+
+    }
+}
+
+void start(BootParams* bootParams) {   
 
     _init();
     VGA_clrscr();
@@ -124,8 +124,7 @@ void start(BootParams* bootParams)
 
     log_debug("Main", "Boot device: %x", bootParams->BootDevice);
     log_debug("Main", "Memory region count: %d", bootParams->Memory.RegionCount);
-    for (int i = 0; i < bootParams->Memory.RegionCount; i++) 
-    {
+    for (int i = 0; i < bootParams->Memory.RegionCount; i++) {
         log_debug("Main", "MEM: start=0x%llx length=0x%llx type=%x", 
             bootParams->Memory.Regions[i].Begin,
             bootParams->Memory.Regions[i].Length,
@@ -143,4 +142,6 @@ void start(BootParams* bootParams)
 
     i686_IRQ_RegisterHandler(1, keyboard_handler);
     outb(0x21, inb(0x21) & ~0x02);
+
+    pauyshell();
 }
