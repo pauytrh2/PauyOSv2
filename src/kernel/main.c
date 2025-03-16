@@ -83,14 +83,6 @@ static char scancode_to_ascii_shifted[128] = {
     '*', 0, ' ', 0,
 };
 
-int strcmp(const char *str1, const char *str2) {
-    while (*str1 && (*str1 == *str2)) {
-        str1++;
-        str2++;
-    }
-    return (unsigned char)*str1 - (unsigned char)*str2;
-}
-
 void keyboard_handler(Registers* regs) {
     uint8_t scancode = inb(0x60); // scancode from keyboard port
 
@@ -140,10 +132,13 @@ void PDE() {
     reroute_keyboard_input = 1;
 
     while (1) {
-        if (strcmp(input_buffer, "t") == 0) {
+        if (input_index > 0 && input_buffer[input_index - 1] == 't') {
+            VGA_clrscr();
+            VGA_word(pde_text, 0x0F); // white
             printf("One day... this will open a chrome tab!");
             log_info("Main/PDE", "'t' key pressed!");
-            input_buffer[0] = '\0';  // null terminate the buffer
+            input_buffer[0] = '\0';  // null terminate buffer to reset
+            input_index = 0;         // reset index to 0
         }
     }
 }
