@@ -19,29 +19,12 @@ static int cursor_x = 0;
 static int cursor_y = 1; // 2nd line
 
 static int shift_pressed = 0;
+static int esc_pressed = 0;
 
 static char input_buffer[MAX_INPUT_LENGTH];
 static int input_index = 0;
 
 static int reroute_keyboard_input = 0;
-
-void VGA_move_cursor(int x_offset, int y_offset) {
-    cursor_x += x_offset;
-    cursor_y += y_offset;
-
-    if (cursor_x < 0) cursor_x = 0;
-    if (cursor_y < 0) cursor_y = 0;
-    if (cursor_x >= VGA_WIDTH) cursor_x = VGA_WIDTH - 1;
-    if (cursor_y >= VGA_HEIGHT) cursor_y = VGA_HEIGHT - 1;
-
-    // cursor position in VGA memory
-    unsigned short position = (cursor_y * VGA_WIDTH) + cursor_x;
-
-    outb(0x3D4, 0x0F);
-    outb(0x3D5, position & 0xFF);
-    outb(0x3D4, 0x0E);
-    outb(0x3D5, (position >> 8) & 0xFF);
-}
 
 void VGA_word(const char* string, uint8_t color) {
     for (int i = 0; string[i] != '\0'; i++) {
@@ -100,12 +83,14 @@ void keyboard_handler(Registers* regs) {
             shift_pressed = 1;
         } else if (scancode == 0x0E) { // backspace
             if (reroute_keyboard_input && input_index > 0) {
-                input_index--; 
+                input_index--;
                 input_buffer[input_index] = '\0'; // null terminate the string
             }
+        } else if (scancode == 0x01) { // esc
+            esc_pressed = 1;
         } else {
             char key = 0;
-            
+
             if (shift_pressed) {
                 key = scancode_to_ascii_shifted[scancode];
             } else {
@@ -117,7 +102,7 @@ void keyboard_handler(Registers* regs) {
                     input_buffer[input_index++] = key;
                     input_buffer[input_index] = '\0'; // null terminate the string
                 } else if (!reroute_keyboard_input) {
-                    // If rerouting is not enabled print the character to the screen
+                    // if rerouting is not enabled, print the character to the screen
                     printf("%c", key);
                     cursor_x += 1;
                 }
@@ -126,17 +111,37 @@ void keyboard_handler(Registers* regs) {
     }
 }
 
+void notepad() {
+    log_info("Main/PDE", "Notpad is now active!");
+    VGA_clrscr();
+    printf("Notpad *active*\n\n");
+    reroute_keyboard_input = 0; // enable typing
+
+    while (1) {
+        if (esc_pressed) {
+            log_info("Main/PDE/notpad", "esc key pressed, exiting notpad...");
+            VGA_clrscr();
+            VGA_word(pde_text, 0x0F);
+            printf("Press 'n' for notpad");
+            reroute_keyboard_input = 1; // disable typing
+            esc_pressed = 0;
+            break;
+        }
+    }
+}
+
 void PDE() {
     VGA_clrscr();
     VGA_word(pde_text, 0x0F); // white
-    reroute_keyboard_input = 1;
+    printf("Press 'n' for notpad");
+    reroute_keyboard_input = 1; // disable typing
 
     while (1) {
-        if (input_index > 0 && input_buffer[input_index - 1] == 't') {
+        if (input_index > 0 && input_buffer[input_index - 1] == 'n') {
             VGA_clrscr();
             VGA_word(pde_text, 0x0F); // white
-            printf("One day... this will open a chrome tab!");
-            log_info("Main/PDE", "'t' key pressed!");
+            log_info("Main/PDE", "'n' key pressed!");
+            notepad();
             input_buffer[0] = '\0';  // null terminate buffer to reset
             input_index = 0;         // reset index to 0
         }
