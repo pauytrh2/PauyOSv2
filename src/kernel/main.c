@@ -102,7 +102,6 @@ void keyboard_handler(Registers* regs) {
                     input_buffer[input_index++] = key;
                     input_buffer[input_index] = '\0'; // null terminate the string
                 } else if (!reroute_keyboard_input) {
-                    // if rerouting is not enabled, print the character to the screen
                     printf("%c", key);
                     cursor_x += 1;
                 }
