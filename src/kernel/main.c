@@ -7,7 +7,7 @@
 #include <debug.h>
 #include <boot/bootparams.h>
 #include <arch/i686/vga_text.h>
-#include </home/pauytrh/PauyOSv2/image/root/system_resources/PDE/frame.h>
+#include <../../image/root/system_resources/PDE/ascii.h>
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
