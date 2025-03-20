@@ -7,13 +7,14 @@
 #include <debug.h>
 #include <boot/bootparams.h>
 #include <arch/i686/vga_text.h>
-#include <../../image/root/system_resources/PDE/ascii.h>
+#include </home/pauytrh/PauyOSv2/image/root/system_resources/PDE/ascii.h>
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 #define MAX_INPUT_LENGTH 1024  // Maximum length of typed input
 
 extern void _init();
+void crash_me();
 
 static int cursor_x = 0;
 static int cursor_y = 1; // 2nd line
@@ -132,7 +133,7 @@ void notepad() {
 void PDE() {
     VGA_clrscr();
     VGA_word(pde_text, 0x0F); // white
-    printf("Press 'n' for notpad");
+    printf("Press 'n' for notpad, Press 'k' to crash the system");
     reroute_keyboard_input = 1; // disable typing
 
     while (1) {
@@ -141,6 +142,13 @@ void PDE() {
             VGA_word(pde_text, 0x0F); // white
             log_info("Main/PDE", "'n' key pressed!");
             notepad();
+            input_buffer[0] = '\0';  // null terminate buffer to reset
+            input_index = 0;         // reset index to 0
+        } else if (input_index > 0 && input_buffer[input_index - 1] == 'k') {
+            VGA_clrscr();
+            crash_me();
+            VGA_word(pde_text, 0x0F); // white
+            log_info("Main/PDE", "'k' key pressed!");
             input_buffer[0] = '\0';  // null terminate buffer to reset
             input_index = 0;         // reset index to 0
         }
