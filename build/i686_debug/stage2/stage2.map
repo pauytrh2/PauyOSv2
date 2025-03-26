@@ -21,7 +21,7 @@ Linker script and memory map
  .entry         0x0000000000000500       0xe3 build/i686_debug/stage2/entry.o
                 0x0000000000000500                entry
 
-.text           0x00000000000005f0     0x28a0
+.text           0x00000000000005f0     0x28f0
                 0x00000000000005f0                __text_start = .
  *(.text)
  .text          0x00000000000005f0      0x145 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
@@ -61,7 +61,7 @@ Linker script and memory map
                 0x0000000000001bd2                memset
                 0x0000000000001c15                memcmp
                 0x0000000000001c75                segoffset_to_linear
- .text          0x0000000000001c9e      0x8ad build/i686_debug/stage2/stdio.o
+ .text          0x0000000000001c9e      0x8fb build/i686_debug/stage2/stdio.o
                 0x0000000000001c9e                putchr
                 0x0000000000001ccd                putcolor
                 0x0000000000001cff                getchr
@@ -73,133 +73,134 @@ Linker script and memory map
                 0x0000000000002058                puts
                 0x0000000000002087                printf_unsigned
                 0x0000000000002140                printf_signed
-                0x000000000000219d                printf
-                0x00000000000024b2                print_buffer
- .text          0x000000000000254b      0x17a build/i686_debug/stage2/stdlib.o
-                0x000000000000254b                qsort_internal
-                0x000000000000269c                qsort
- .text          0x00000000000026c5      0x2ab build/i686_debug/stage2/string.o
-                0x00000000000026c5                strchr
-                0x0000000000002703                strcpy
-                0x0000000000002755                strlen
-                0x000000000000277b                strcmp
-                0x00000000000027e8                utf16_to_codepoint
-                0x0000000000002847                codepoint_to_utf8
- .text          0x0000000000002970      0x24e build/i686_debug/stage2/x86.o
-                0x0000000000002970                x86_outb
-                0x000000000000297b                x86_inb
-                0x0000000000002984                x86_Disk_GetDriveParams
-                0x0000000000002a47                x86_Disk_Reset
-                0x0000000000002a97                x86_Disk_Read
-                0x0000000000002b15                x86_E820GetNextBlock
- *fill*         0x0000000000002bbe        0x2 
- .text          0x0000000000002bc0       0x41 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
- *fill*         0x0000000000002c01        0xf 
- .text          0x0000000000002c10      0x12a .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
-                0x0000000000002c10                __udivdi3
- *fill*         0x0000000000002d3a        0x6 
- .text          0x0000000000002d40      0x150 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
-                0x0000000000002d40                __umoddi3
+                0x000000000000219d                printf_float
+                0x0000000000002280                printf
+ .text          0x0000000000002599      0x17a build/i686_debug/stage2/stdlib.o
+                0x0000000000002599                qsort_internal
+                0x00000000000026ea                qsort
+ .text          0x0000000000002713      0x2ab build/i686_debug/stage2/string.o
+                0x0000000000002713                strchr
+                0x0000000000002751                strcpy
+                0x00000000000027a3                strlen
+                0x00000000000027c9                strcmp
+                0x0000000000002836                utf16_to_codepoint
+                0x0000000000002895                codepoint_to_utf8
+ *fill*         0x00000000000029be        0x2 
+ .text          0x00000000000029c0      0x24e build/i686_debug/stage2/x86.o
+                0x00000000000029c0                x86_outb
+                0x00000000000029cb                x86_inb
+                0x00000000000029d4                x86_Disk_GetDriveParams
+                0x0000000000002a97                x86_Disk_Reset
+                0x0000000000002ae7                x86_Disk_Read
+                0x0000000000002b65                x86_E820GetNextBlock
+ *fill*         0x0000000000002c0e        0x2 
+ .text          0x0000000000002c10       0x41 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+ *fill*         0x0000000000002c51        0xf 
+ .text          0x0000000000002c60      0x12a .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+                0x0000000000002c60                __udivdi3
+ *fill*         0x0000000000002d8a        0x6 
+ .text          0x0000000000002d90      0x150 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+                0x0000000000002d90                __umoddi3
 
-.init           0x0000000000002e90        0xf
- .init          0x0000000000002e90        0x3 build/i686_debug/stage2/crti.o
-                0x0000000000002e90                _init
- .init          0x0000000000002e93        0x5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
- .init          0x0000000000002e98        0x5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
- .init          0x0000000000002e9d        0x2 build/i686_debug/stage2/crtn.o
+.init           0x0000000000002ee0        0xf
+ .init          0x0000000000002ee0        0x3 build/i686_debug/stage2/crti.o
+                0x0000000000002ee0                _init
+ .init          0x0000000000002ee3        0x5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+ .init          0x0000000000002ee8        0x5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+ .init          0x0000000000002eed        0x2 build/i686_debug/stage2/crtn.o
 
-.fini           0x0000000000002e9f        0xa
- .fini          0x0000000000002e9f        0x3 build/i686_debug/stage2/crti.o
-                0x0000000000002e9f                _fini
- .fini          0x0000000000002ea2        0x5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
- .fini          0x0000000000002ea7        0x2 build/i686_debug/stage2/crtn.o
+.fini           0x0000000000002eef        0xa
+ .fini          0x0000000000002eef        0x3 build/i686_debug/stage2/crti.o
+                0x0000000000002eef                _fini
+ .fini          0x0000000000002ef2        0x5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+ .fini          0x0000000000002ef7        0x2 build/i686_debug/stage2/crtn.o
 
-.data           0x0000000000002eac       0x10
-                0x0000000000002eac                __data_start = .
+.data           0x0000000000002efc       0x10
+                0x0000000000002efc                __data_start = .
  *(.data)
- .data          0x0000000000002eac        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
-                0x0000000000002eac                __dso_handle
- .data          0x0000000000002eb0        0x0 build/i686_debug/stage2/ctype.o
- .data          0x0000000000002eb0        0x0 build/i686_debug/stage2/disk.o
- .data          0x0000000000002eb0        0x0 build/i686_debug/stage2/elf.o
- .data          0x0000000000002eb0        0x0 build/i686_debug/stage2/fat.o
- .data          0x0000000000002eb0        0x8 build/i686_debug/stage2/main.o
-                0x0000000000002eb0                KernelLoadBuffer
-                0x0000000000002eb4                Kernel
- .data          0x0000000000002eb8        0x0 build/i686_debug/stage2/mbr.o
- .data          0x0000000000002eb8        0x0 build/i686_debug/stage2/memdetect.o
- .data          0x0000000000002eb8        0x0 build/i686_debug/stage2/memory.o
- .data          0x0000000000002eb8        0x4 build/i686_debug/stage2/stdio.o
-                0x0000000000002eb8                g_ScreenBuffer
- .data          0x0000000000002ebc        0x0 build/i686_debug/stage2/stdlib.o
- .data          0x0000000000002ebc        0x0 build/i686_debug/stage2/string.o
- .data          0x0000000000002ebc        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
- .data          0x0000000000002ebc        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .data          0x0000000000002ebc        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+ .data          0x0000000000002efc        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+                0x0000000000002efc                __dso_handle
+ .data          0x0000000000002f00        0x0 build/i686_debug/stage2/ctype.o
+ .data          0x0000000000002f00        0x0 build/i686_debug/stage2/disk.o
+ .data          0x0000000000002f00        0x0 build/i686_debug/stage2/elf.o
+ .data          0x0000000000002f00        0x0 build/i686_debug/stage2/fat.o
+ .data          0x0000000000002f00        0x8 build/i686_debug/stage2/main.o
+                0x0000000000002f00                KernelLoadBuffer
+                0x0000000000002f04                Kernel
+ .data          0x0000000000002f08        0x0 build/i686_debug/stage2/mbr.o
+ .data          0x0000000000002f08        0x0 build/i686_debug/stage2/memdetect.o
+ .data          0x0000000000002f08        0x0 build/i686_debug/stage2/memory.o
+ .data          0x0000000000002f08        0x4 build/i686_debug/stage2/stdio.o
+                0x0000000000002f08                g_ScreenBuffer
+ .data          0x0000000000002f0c        0x0 build/i686_debug/stage2/stdlib.o
+ .data          0x0000000000002f0c        0x0 build/i686_debug/stage2/string.o
+ .data          0x0000000000002f0c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+ .data          0x0000000000002f0c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .data          0x0000000000002f0c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
-.ctors          0x0000000000002ebc        0x8
- .ctors         0x0000000000002ebc        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
- .ctors         0x0000000000002ec0        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+.ctors          0x0000000000002f0c        0x8
+ .ctors         0x0000000000002f0c        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+ .ctors         0x0000000000002f10        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
 
-.dtors          0x0000000000002ec4        0x8
- .dtors         0x0000000000002ec4        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
- .dtors         0x0000000000002ec8        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
-                0x0000000000002ec8                __DTOR_END__
+.dtors          0x0000000000002f14        0x8
+ .dtors         0x0000000000002f14        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+ .dtors         0x0000000000002f18        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+                0x0000000000002f18                __DTOR_END__
 
 .tm_clone_table
-                0x0000000000002ecc        0x0
+                0x0000000000002f1c        0x0
  .tm_clone_table
-                0x0000000000002ecc        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+                0x0000000000002f1c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
  .tm_clone_table
-                0x0000000000002ecc        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+                0x0000000000002f1c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
 
-.rodata         0x0000000000002ecc      0x21a
-                0x0000000000002ecc                __rodata_start = .
+.rodata         0x0000000000002f20      0x2fc
+                0x0000000000002f20                __rodata_start = .
  *(.rodata)
- .rodata        0x0000000000002ecc       0x16 build/i686_debug/stage2/elf.o
- *fill*         0x0000000000002ee2        0x2 
- .rodata        0x0000000000002ee4       0xc3 build/i686_debug/stage2/fat.o
- *fill*         0x0000000000002fa7        0x1 
- .rodata        0x0000000000002fa8       0x55 build/i686_debug/stage2/main.o
- *fill*         0x0000000000002ffd        0x3 
- .rodata        0x0000000000003000       0x2b build/i686_debug/stage2/memdetect.o
- *fill*         0x000000000000302b        0x1 
- .rodata        0x000000000000302c       0xba build/i686_debug/stage2/stdio.o
-                0x000000000000302c                SCREEN_WIDTH
-                0x0000000000003030                SCREEN_HEIGHT
-                0x0000000000003034                DEFAULT_COLOR
-                0x0000000000003038                g_HexChars
+ .rodata        0x0000000000002f20       0x16 build/i686_debug/stage2/elf.o
+ *fill*         0x0000000000002f36        0x2 
+ .rodata        0x0000000000002f38       0xc3 build/i686_debug/stage2/fat.o
+ *fill*         0x0000000000002ffb        0x1 
+ .rodata        0x0000000000002ffc       0x55 build/i686_debug/stage2/main.o
+ *fill*         0x0000000000003051        0x3 
+ .rodata        0x0000000000003054       0x2b build/i686_debug/stage2/memdetect.o
+ *fill*         0x000000000000307f        0x1 
+ .rodata        0x0000000000003080      0x19c build/i686_debug/stage2/stdio.o
+                0x0000000000003080                SCREEN_WIDTH
+                0x0000000000003084                SCREEN_HEIGHT
+                0x0000000000003088                DEFAULT_COLOR
+                0x000000000000308c                g_HexChars
 
-.eh_frame       0x00000000000030e8       0xdc
- .eh_frame      0x00000000000030e8        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
- .eh_frame      0x00000000000030e8        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
- .eh_frame      0x00000000000030ec       0x64 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .eh_frame      0x0000000000003150       0x74 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+.eh_frame       0x000000000000321c       0xdc
+ .eh_frame      0x000000000000321c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+ .eh_frame      0x000000000000321c        0x4 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+ .eh_frame      0x0000000000003220       0x64 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .eh_frame      0x0000000000003284       0x74 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
-.bss            0x00000000000031e0     0x184c
-                0x00000000000031e0                __bss_start = .
+.bss            0x0000000000003300     0x184c
+                0x0000000000003300                __bss_start = .
  *(.bss)
- .bss           0x00000000000031e0       0x20 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
- .bss           0x0000000000003200        0x0 build/i686_debug/stage2/ctype.o
- .bss           0x0000000000003200        0x0 build/i686_debug/stage2/disk.o
- .bss           0x0000000000003200        0x0 build/i686_debug/stage2/elf.o
- .bss           0x0000000000003200       0x14 build/i686_debug/stage2/fat.o
- .bss           0x0000000000003214        0xc build/i686_debug/stage2/main.o
-                0x0000000000003214                g_BootParams
- .bss           0x0000000000003220        0x0 build/i686_debug/stage2/mbr.o
- .bss           0x0000000000003220     0x1804 build/i686_debug/stage2/memdetect.o
-                0x0000000000003220                g_MemRegions
-                0x0000000000004a20                g_MemRegionCount
- .bss           0x0000000000004a24        0x0 build/i686_debug/stage2/memory.o
- .bss           0x0000000000004a24        0x8 build/i686_debug/stage2/stdio.o
-                0x0000000000004a24                g_ScreenX
-                0x0000000000004a28                g_ScreenY
- .bss           0x0000000000004a2c        0x0 build/i686_debug/stage2/stdlib.o
- .bss           0x0000000000004a2c        0x0 build/i686_debug/stage2/string.o
- .bss           0x0000000000004a2c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
- .bss           0x0000000000004a2c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .bss           0x0000000000004a2c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
-                0x0000000000004a2c                __end = .
+ .bss           0x0000000000003300       0x20 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
+ .bss           0x0000000000003320        0x0 build/i686_debug/stage2/ctype.o
+ .bss           0x0000000000003320        0x0 build/i686_debug/stage2/disk.o
+ .bss           0x0000000000003320        0x0 build/i686_debug/stage2/elf.o
+ .bss           0x0000000000003320       0x14 build/i686_debug/stage2/fat.o
+ .bss           0x0000000000003334        0xc build/i686_debug/stage2/main.o
+                0x0000000000003334                g_BootParams
+ .bss           0x0000000000003340        0x0 build/i686_debug/stage2/mbr.o
+ .bss           0x0000000000003340     0x1804 build/i686_debug/stage2/memdetect.o
+                0x0000000000003340                g_MemRegions
+                0x0000000000004b40                g_MemRegionCount
+ .bss           0x0000000000004b44        0x0 build/i686_debug/stage2/memory.o
+ .bss           0x0000000000004b44        0x8 build/i686_debug/stage2/stdio.o
+                0x0000000000004b44                g_ScreenX
+                0x0000000000004b48                g_ScreenY
+ .bss           0x0000000000004b4c        0x0 build/i686_debug/stage2/stdlib.o
+ .bss           0x0000000000004b4c        0x0 build/i686_debug/stage2/string.o
+ .bss           0x0000000000004b4c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtend.o
+ .bss           0x0000000000004b4c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .bss           0x0000000000004b4c        0x0 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+                0x0000000000004b4c                __end = .
 LOAD build/i686_debug/stage2/crti.o
 LOAD .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/crtbegin.o
 LOAD build/i686_debug/stage2/ctype.o
@@ -268,7 +269,7 @@ OUTPUT(build/i686_debug/stage2/stage2.bin binary)
  .debug_pubnames
                 0x0000000000000000        0x0 build/i686_debug/stage2/crtn.o
 
-.debug_info     0x0000000000000000     0x3080
+.debug_info     0x0000000000000000     0x3081
  .debug_info    0x0000000000000000        0x0 build/i686_debug/stage2/crti.o
  .debug_info    0x0000000000000000       0xcb build/i686_debug/stage2/ctype.o
  .debug_info    0x00000000000000cb      0x2b1 build/i686_debug/stage2/disk.o
@@ -278,16 +279,16 @@ OUTPUT(build/i686_debug/stage2/stage2.bin binary)
  .debug_info    0x00000000000019bb      0x289 build/i686_debug/stage2/mbr.o
  .debug_info    0x0000000000001c44      0x21c build/i686_debug/stage2/memdetect.o
  .debug_info    0x0000000000001e60      0x237 build/i686_debug/stage2/memory.o
- .debug_info    0x0000000000002097      0x54d build/i686_debug/stage2/stdio.o
- .debug_info    0x00000000000025e4      0x1a6 build/i686_debug/stage2/stdlib.o
- .debug_info    0x000000000000278a      0x20a build/i686_debug/stage2/string.o
- .debug_info    0x0000000000002994        0x0 build/i686_debug/stage2/entry.o
- .debug_info    0x0000000000002994       0x7d build/i686_debug/stage2/x86.o
- .debug_info    0x0000000000002a11        0x0 build/i686_debug/stage2/crtn.o
- .debug_info    0x0000000000002a11      0x32c .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .debug_info    0x0000000000002d3d      0x343 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+ .debug_info    0x0000000000002097      0x54e build/i686_debug/stage2/stdio.o
+ .debug_info    0x00000000000025e5      0x1a6 build/i686_debug/stage2/stdlib.o
+ .debug_info    0x000000000000278b      0x20a build/i686_debug/stage2/string.o
+ .debug_info    0x0000000000002995        0x0 build/i686_debug/stage2/entry.o
+ .debug_info    0x0000000000002995       0x7d build/i686_debug/stage2/x86.o
+ .debug_info    0x0000000000002a12        0x0 build/i686_debug/stage2/crtn.o
+ .debug_info    0x0000000000002a12      0x32c .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .debug_info    0x0000000000002d3e      0x343 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
-.debug_abbrev   0x0000000000000000     0x1089
+.debug_abbrev   0x0000000000000000     0x1022
  .debug_abbrev  0x0000000000000000        0x0 build/i686_debug/stage2/crti.o
  .debug_abbrev  0x0000000000000000       0x77 build/i686_debug/stage2/ctype.o
  .debug_abbrev  0x0000000000000077      0x140 build/i686_debug/stage2/disk.o
@@ -297,16 +298,16 @@ OUTPUT(build/i686_debug/stage2/stage2.bin binary)
  .debug_abbrev  0x00000000000006d6      0x121 build/i686_debug/stage2/mbr.o
  .debug_abbrev  0x00000000000007f7      0x118 build/i686_debug/stage2/memdetect.o
  .debug_abbrev  0x000000000000090f       0xe2 build/i686_debug/stage2/memory.o
- .debug_abbrev  0x00000000000009f1      0x1f6 build/i686_debug/stage2/stdio.o
- .debug_abbrev  0x0000000000000be7       0xe6 build/i686_debug/stage2/stdlib.o
- .debug_abbrev  0x0000000000000ccd       0xd3 build/i686_debug/stage2/string.o
- .debug_abbrev  0x0000000000000da0        0x0 build/i686_debug/stage2/entry.o
- .debug_abbrev  0x0000000000000da0       0x1d build/i686_debug/stage2/x86.o
- .debug_abbrev  0x0000000000000dbd        0x0 build/i686_debug/stage2/crtn.o
- .debug_abbrev  0x0000000000000dbd      0x15b .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .debug_abbrev  0x0000000000000f18      0x171 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+ .debug_abbrev  0x00000000000009f1      0x18f build/i686_debug/stage2/stdio.o
+ .debug_abbrev  0x0000000000000b80       0xe6 build/i686_debug/stage2/stdlib.o
+ .debug_abbrev  0x0000000000000c66       0xd3 build/i686_debug/stage2/string.o
+ .debug_abbrev  0x0000000000000d39        0x0 build/i686_debug/stage2/entry.o
+ .debug_abbrev  0x0000000000000d39       0x1d build/i686_debug/stage2/x86.o
+ .debug_abbrev  0x0000000000000d56        0x0 build/i686_debug/stage2/crtn.o
+ .debug_abbrev  0x0000000000000d56      0x15b .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .debug_abbrev  0x0000000000000eb1      0x171 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
-.debug_line     0x0000000000000000     0x191b
+.debug_line     0x0000000000000000     0x1919
  .debug_line    0x0000000000000000        0x0 build/i686_debug/stage2/crti.o
  .debug_line    0x0000000000000000       0x8c build/i686_debug/stage2/ctype.o
  .debug_line    0x000000000000008c       0xef build/i686_debug/stage2/disk.o
@@ -316,14 +317,14 @@ OUTPUT(build/i686_debug/stage2/stage2.bin binary)
  .debug_line    0x0000000000000abc       0xae build/i686_debug/stage2/mbr.o
  .debug_line    0x0000000000000b6a       0xc0 build/i686_debug/stage2/memdetect.o
  .debug_line    0x0000000000000c2a      0x102 build/i686_debug/stage2/memory.o
- .debug_line    0x0000000000000d2c      0x3c7 build/i686_debug/stage2/stdio.o
- .debug_line    0x00000000000010f3      0x169 build/i686_debug/stage2/stdlib.o
- .debug_line    0x000000000000125c      0x1c0 build/i686_debug/stage2/string.o
- .debug_line    0x000000000000141c        0x0 build/i686_debug/stage2/entry.o
- .debug_line    0x000000000000141c      0x1b1 build/i686_debug/stage2/x86.o
- .debug_line    0x00000000000015cd        0x0 build/i686_debug/stage2/crtn.o
- .debug_line    0x00000000000015cd      0x179 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .debug_line    0x0000000000001746      0x1d5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+ .debug_line    0x0000000000000d2c      0x3c5 build/i686_debug/stage2/stdio.o
+ .debug_line    0x00000000000010f1      0x169 build/i686_debug/stage2/stdlib.o
+ .debug_line    0x000000000000125a      0x1c0 build/i686_debug/stage2/string.o
+ .debug_line    0x000000000000141a        0x0 build/i686_debug/stage2/entry.o
+ .debug_line    0x000000000000141a      0x1b1 build/i686_debug/stage2/x86.o
+ .debug_line    0x00000000000015cb        0x0 build/i686_debug/stage2/crtn.o
+ .debug_line    0x00000000000015cb      0x179 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .debug_line    0x0000000000001744      0x1d5 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
 .debug_frame    0x0000000000000000      0x728
  .debug_frame   0x0000000000000000        0x0 build/i686_debug/stage2/crti.o
@@ -365,7 +366,7 @@ OUTPUT(build/i686_debug/stage2/stage2.bin binary)
  .comment       0x00000000000000f7       0x13 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
  .comment       0x000000000000010a       0x13 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
-.debug_str      0x0000000000000000     0x2081
+.debug_str      0x0000000000000000     0x2093
  .debug_str     0x0000000000000000       0xee build/i686_debug/stage2/ctype.o
  .debug_str     0x00000000000000ee      0x1c9 build/i686_debug/stage2/disk.o
  .debug_str     0x00000000000002b7      0x678 build/i686_debug/stage2/elf.o
@@ -374,11 +375,11 @@ OUTPUT(build/i686_debug/stage2/stage2.bin binary)
  .debug_str     0x0000000000001313      0x1ef build/i686_debug/stage2/mbr.o
  .debug_str     0x0000000000001502      0x1a8 build/i686_debug/stage2/memdetect.o
  .debug_str     0x00000000000016aa      0x15a build/i686_debug/stage2/memory.o
- .debug_str     0x0000000000001804      0x252 build/i686_debug/stage2/stdio.o
- .debug_str     0x0000000000001a56      0x11e build/i686_debug/stage2/stdlib.o
- .debug_str     0x0000000000001b74      0x147 build/i686_debug/stage2/string.o
- .debug_str     0x0000000000001cbb      0x1e3 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
- .debug_str     0x0000000000001e9e      0x1e3 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
+ .debug_str     0x0000000000001804      0x264 build/i686_debug/stage2/stdio.o
+ .debug_str     0x0000000000001a68      0x11e build/i686_debug/stage2/stdlib.o
+ .debug_str     0x0000000000001b86      0x147 build/i686_debug/stage2/string.o
+ .debug_str     0x0000000000001ccd      0x1e3 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_udivdi3.o)
+ .debug_str     0x0000000000001eb0      0x1e3 .toolchains/i686-elf/lib/gcc/i686-elf/11.2.0/libgcc.a(_umoddi3.o)
 
 .debug_line_str
                 0x0000000000000000      0xc61

@@ -11,7 +11,7 @@
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
-#define MAX_INPUT_LENGTH 1024  // Maximum length of typed input
+#define MAX_INPUT_LENGTH 1024
 
 extern void _init();
 void crash_me();
@@ -122,7 +122,7 @@ void notepad() {
             log_info("Main/PDE/notpad", "esc key pressed, exiting notpad...");
             VGA_clrscr();
             VGA_word(pde_text, 0x0F);
-            printf("Press 'n' for notpad");
+            printf("Press 'n' for notpad, Press 'k' to crash the system");
             reroute_keyboard_input = 1; // disable typing
             esc_pressed = 0;
             break;
